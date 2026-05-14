@@ -266,3 +266,63 @@ Ví dụ:
 .text và .highlight
 đều có: (0,1,0)
 Rule nào viết sau sẽ được áp dụng.
+
+# Câu C1
+## 1. Tính chiều rộng thực tế
+### Sidebar
+width = 300px
+padding:
+20px x 2 = 40px
+border:
+1px x 2 = 2px
+Chiều rộng thực:
+300 + 40 + 2 = 342px
+
+### Content
+width = 660px
+padding:
+30px x 2 = 60px
+border:
+1px x 2 = 2px
+Chiều rộng thực:
+660 + 60 + 2 = 722px
+
+## 2. Giải thích layout bị vỡ
+Tổng chiều rộng:
+342 + 722 = 1064px
+Container chỉ có:
+960px
+Vì tổng lớn hơn container nên content bị đẩy xuống dòng mới.
+
+## 3. Hai cách sửa
+### Cách 1 — Dùng border-box
+Thêm:
+box-sizing: border-box;
+Lúc này:
+padding và border được tính bên trong width.
+Tổng:
+300 + 660 = 960px
+Layout không bị vỡ.
+
+### Cách 2 — Không dùng border-box
+Phải tự trừ padding + border khỏi width.
+Sidebar:
+300 - 40 - 2
+= 258px content width
+Content:
+660 - 60 - 2 = 598px content width
+Hoặc sửa trực tiếp:
+.sidebar {
+    width: 258px;
+}
+.content {
+    width: 598px;
+}
+Lúc đó tổng thực:
+300 + 660 = 960px
+
+## 4. Kết luận
+border-box giúp:
+- dễ tính toán
+- tránh vỡ layout
+- quản lý responsive tốt hơn
